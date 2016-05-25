@@ -16,31 +16,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var add: UIBarButtonItem!
     
     var lists : [Entity] = []
-
-    override func viewWillAppear(animated: Bool) {
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "Entity")
         var results: [AnyObject]?
-//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//        let delete = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//        
 //        do {
-//            try managedContext.executeRequest(deleteRequest)
-//        } catch let error as NSError {
-//            print("there is an \(error)")
+//            try managedContext.executeRequest(delete)
+//        } catch {
+//            print(error)
 //        }
-       do {
+        do {
             results = try managedContext.executeFetchRequest(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
         if results != nil {
             self.lists = results as! [Entity]
-            print(results)
+            self.listTable.reloadData()
+            print(lists)
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let currentCell = tableView.dequeueReusableCellWithIdentifier("myCell")!
@@ -52,7 +51,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete){
             if let table = listTable {
+                let appDelegate: AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+                let context:NSManagedObjectContext = appDelegate.managedObjectContext
+                context.deleteObject(lists[indexPath.row])
                 lists.removeAtIndex(indexPath.row)
+                do {
+                    try context.save()
+                } catch {
+                    print("delete failed")
+                }
                 table.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
         }
@@ -72,12 +79,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let textField = alert.textFields![0] as UITextField
         let textField1 = alert.textFields![1] as UITextField
         let finishAction = UIAlertAction(title: "OK", style: .Default) { (finish) -> Void in
-        let entity = Entity()
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext
+            let entities =  NSEntityDescription.insertNewObjectForEntityForName("Entity", inManagedObjectContext: managedContext) as! Entity
+            entities.name = textField.text
+            entities.address = textField1.text
+            do {
+                try managedContext.save()
+                print("Item Saved")
+            } catch let error as NSError  {
+                print("Could not save \(error), \(error.userInfo)")
+            }
+            
+            let entity = Entity()
             entity.name = textField.text!
             entity.address = textField1.text!
-            self.save(textField.text!, address: textField1.text!)
+            self.lists.append(entity)
             self.listTable.reloadData()
         }
+        
         alert.addAction(finishAction)
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -85,20 +105,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let NVC = segue.destinationViewController as! PresentViewController
         let currentRow = listTable.indexPathForSelectedRow?.row
         NVC.receive = lists[currentRow!]
-    }
-    func save(name:String, address:String) {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let entity =  NSEntityDescription.entityForName("Entity", inManagedObjectContext:managedContext)
-        let web = Entity(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        web.name = name
-        web.address = address
-        do {
-            try managedContext.save()
-            print("Item Saved")
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        }
     }
 }
 

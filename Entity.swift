@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 class Entity: NSManagedObject {
@@ -15,4 +16,9 @@ class Entity: NSManagedObject {
     @NSManaged var address: String?
     @NSManaged var name: String?
     
+    convenience init() {
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let item = NSEntityDescription.entityForName("Entity", inManagedObjectContext: context)
+        self.init(entity: item!, insertIntoManagedObjectContext: context)
+    }
 }

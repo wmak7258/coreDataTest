@@ -45,6 +45,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="tAi-Lt-HM2" kind="show" id="6GZ-mZ-cXj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -71,12 +74,11 @@
                     <connections>
                         <outlet property="add" destination="Ccr-E7-6d1" id="JeN-nW-nZv"/>
                         <outlet property="listTable" destination="Mda-hc-wTL" id="uOS-Zk-PIW"/>
-                        <segue destination="tAi-Lt-HM2" kind="show" identifier="web" id="PfT-2C-af6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="484" y="-545"/>
+            <point key="canvasLocation" x="404" y="-599"/>
         </scene>
         <!--Present View Controller-->
         <scene sceneID="XYG-Ja-h8F">
@@ -107,10 +109,10 @@
                         <constraints>
                             <constraint firstItem="b0A-zv-NpA" firstAttribute="centerY" secondItem="VNS-d0-im2" secondAttribute="centerY" constant="31.5" id="0IJ-Qc-oGv"/>
                             <constraint firstItem="b0A-zv-NpA" firstAttribute="centerX" secondItem="VNS-d0-im2" secondAttribute="centerX" id="4GL-O8-Q8J"/>
-                            <constraint firstItem="GNM-EH-qTd" firstAttribute="leading" secondItem="VNS-d0-im2" secondAttribute="leadingMargin" constant="-20" id="7xy-GY-Z9D"/>
-                            <constraint firstItem="u6w-30-d6q" firstAttribute="top" secondItem="GNM-EH-qTd" secondAttribute="bottom" id="EyP-QW-pDk"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="GNM-EH-qTd" secondAttribute="trailing" constant="-20" id="TE4-rU-dx2"/>
-                            <constraint firstItem="GNM-EH-qTd" firstAttribute="top" secondItem="wgW-9c-zSI" secondAttribute="bottom" id="wbv-m8-WTE"/>
+                            <constraint firstItem="u6w-30-d6q" firstAttribute="top" secondItem="GNM-EH-qTd" secondAttribute="bottom" id="JMY-Oe-WW4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GNM-EH-qTd" secondAttribute="trailing" constant="-20" id="YzA-ba-hdX"/>
+                            <constraint firstItem="GNM-EH-qTd" firstAttribute="leading" secondItem="VNS-d0-im2" secondAttribute="leadingMargin" constant="-20" id="fQJ-Sp-ILp"/>
+                            <constraint firstItem="GNM-EH-qTd" firstAttribute="top" secondItem="wgW-9c-zSI" secondAttribute="bottom" id="yPg-ep-Arz"/>
                         </constraints>
                     </view>
                     <connections>
@@ -120,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bm2-oJ-Fxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1135" y="-577"/>
+            <point key="canvasLocation" x="1081" y="-599"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PPP-bl-1U6">
@@ -138,7 +140,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0g3-Ux-OKA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-281" y="-577"/>
+            <point key="canvasLocation" x="-284" y="-599"/>
         </scene>
     </scenes>
 </document>
